@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from tkinter import *
+from IO_functions.handle_files import *
     
 global x_0, y_0
     
@@ -25,30 +26,6 @@ def print_all_segments_to_shell():
          print(all_segments[i])
     return 
 
-def print_all_segments_to_ASCII_file():
-    global all_segments 
-    f = open("Segmentfile.txt", 'w')
-    for i in range(len(all_segments)):
-        f.write(str(all_segments[i])+'\n')
-    f.close()
-    return 
-
-def read_all_segments_from_ASCII_file():
-    global all_segments 
-    all_segments = []
-    four_integers = []
-    with open("Segmentfile.txt", "r") as f:
-        aux  = f.read()
-    for i in range(len((aux.split('\n')))):
-        fourtuple = (aux.split('\n'))[i]
-        four_integers_as_characters = fourtuple.replace(',','').replace('[','').replace(']','')
-        if len(four_integers_as_characters.split()) == 4:
-            a,b,c,d = map(float,(four_integers_as_characters.split()))
-            tuple_of_four_integers_as_floats = a,b,c,d
-            four_integers_as_floats = list(tuple_of_four_integers_as_floats)
-            all_segments.append(four_integers_as_floats)
-    f.close()
-    return 
 
 def draw_set_to_canvas():
     global all_segments 
@@ -69,7 +46,7 @@ w.grid(row=1,columnspan=5)
 # setup buttons
 button_print_to_shell = Button(master, text="Print To Shell", command = print_all_segments_to_shell )
 button_print_to_shell.grid(row=0, column=0)
-button_print_to_file = Button(master, text="Print To File", command = print_all_segments_to_ASCII_file )
+button_print_to_file = Button(master, text="Print To File", command = lambda :  print_all_segments_to_ASCII_file(all_segments) )
 button_print_to_file.grid(row=0, column=1)
 button_read_from_ASCII_file = Button(master, text="Read from File", command = read_all_segments_from_ASCII_file )
 button_read_from_ASCII_file.grid(row=0, column=2)
